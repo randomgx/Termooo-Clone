@@ -1,9 +1,10 @@
 document.onkeydown = function(evt) {
     evt = evt || window.event;
     const key = evt.key.toLowerCase();
-    const isLetter = (key >= "a" && key <= "z");
+    registerKey(key);
+    //const isLetter = (key >= "a" && key <= "z");
 
-    if (key == "backspace" && currentId > 0) {
+    /*if (key == "backspace" && currentId > 0) {
         currentId--;
         $(".row").eq(currentRow).children().eq(currentId).html("");
         return;
@@ -23,7 +24,7 @@ document.onkeydown = function(evt) {
 
     if (key == "enter" && score == ROW_LENGTH) {
         restartGame();
-    }
+    }*/
 }
 
 const ROW_LENGTH = 5;
@@ -31,7 +32,7 @@ const ROW_LENGTH = 5;
 var currentRow;
 var currentId;
 const rows = $(".row");
-const word = "navio";
+const word = "pedra";
 const wordArray = Array.from(word);
 
 var words = [];
@@ -42,7 +43,7 @@ startNewGame();
 function restartGame() {
     score = 0;
     words = [];
-    currentWord = [];
+    lastTypedWord = [];
     $(".popup").hide();
     startNewGame();
     location.reload();
@@ -56,15 +57,36 @@ function unveilNewRow() {
     for (let i = 0; i < ROW_LENGTH; i++) {
         words.push($(rows[currentRow - 1]).children().eq(i).html());
     }
-    let currentWord = words.slice((currentRow * 5) - ROW_LENGTH, (currentRow * 5));
+
+    let lastTypedWord = words.slice((currentRow * 5) - ROW_LENGTH, (currentRow * 5));
+
+    //let repeated = [];
+    /*wordArray.forEach((x) => {
+        repeated[x] = (repeated[x] || 0) + 1;
+    });*/
 
     for (let i = 0; i < ROW_LENGTH; i++) {
-        if (wordArray.indexOf(currentWord[i]) == i) {
+
+        //old code used for checking if position was correct, that
+        //didn't take into consideration that we might have two same letters
+        //if (wordArray.indexOf(lastTypedWord[i]) == i) {
+        //    $(rows[currentRow - 1]).children().eq(i).addClass("right");
+        //    score++;
+
+        if (wordArray.includes(lastTypedWord[i]) && wordArray[i] == lastTypedWord[i]) {
             $(rows[currentRow - 1]).children().eq(i).addClass("right");
             score++;
-        } else if (wordArray.includes(currentWord[i])) {
-            $(rows[currentRow - 1]).children().eq(i).addClass("place");
-        } else if (!wordArray.includes(currentWord[i])) {
+        } else if (wordArray.includes(lastTypedWord[i])) {
+            if ($(rows[currentRow - 1]).children().eq(wordArray.indexOf(lastTypedWord[i], i)).attr("class") == "letter empty right") {
+                //repeated letters is yet to be implemented
+                //probably by checking if there's more than
+                //one of the same letter, than iterating through x times
+                $(rows[currentRow - 1]).children().eq(i).addClass("wrong");
+            } else {
+                $(rows[currentRow - 1]).children().eq(i).addClass("place");
+            }
+
+        } else if (!wordArray.includes(lastTypedWord[i])) {
             $(rows[currentRow - 1]).children().eq(i).addClass("wrong");
         }
     }
@@ -99,5 +121,31 @@ function initializeId() {
                 $(letters[k]).attr("class", "letter empty");
             }
         }
+    }
+}
+
+function registerKey(key) {
+    const isLetter = (key >= "a" && key <= "z");
+
+    if (key == "backspace" && currentId > 0) {
+        currentId--;
+        $(".row").eq(currentRow).children().eq(currentId).html("");
+        return;
+    }
+
+    if (isLetter) {
+        $(".row").eq(currentRow).children().eq(currentId).html(key);
+        if (currentId <= 4) {
+            currentId++;
+        }
+    }
+
+    if (key == "enter" && currentId >= 4) {
+        unveilNewRow();
+        return;
+    }
+
+    if (key == "enter" && score == ROW_LENGTH) {
+        restartGame();
     }
 }

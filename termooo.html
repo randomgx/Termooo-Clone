@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pt-br">
+
+<head>
+    <title>Termo</title>
+    <meta name="description" content="Jogo de palavras">
+    <link rel="author" href="humans.txt">
+    <meta charset="utf-8">
+    <meta name='viewport' content='width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=0, viewport-fit=cover'>
+    <meta name="color-scheme" content="light only">
+    <script defer data-domain="term.ooo" src="https://metaphora.co/plausible.js"></script>
+    <link rel="canonical" href="https://term.ooo">
+    <meta name="theme-color" content="#6E5C62">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="shortcut icon" href="icon.png">
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="apple-touch-icon-precomposed" href="icon.png">
+    <meta name="apple-mobile-web-app-title" content="Termo">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="./termo.bde2f36.css">
+</head>
+
+<body onunload="">
+
+    <div id="modal">
+        <div tabindex=0 id="help">
+            <p tabindex=0>Descubra a palavra certa em 6 tentativas. Depois de cada tentativa, as peças mostram o quão perto você está da solução.
+
+                <div class='example'>
+                    <span tabindex=0 role="text" aria-label="letra T correta" class='letter right'>T</span>
+                    <span tabindex=0 role="text" aria-label="letra U" class='letter'>U</span>
+                    <span tabindex=0 role="text" aria-label="letra R" class='letter'>R</span>
+                    <span tabindex=0 role="text" aria-label="letra M" class='letter'>M</span>
+                    <span tabindex=0 role="text" aria-label="letra A" class='letter'>A</span>
+                </div>
+
+                <p tabindex=0>A letra <span class='letter right'>T</span> faz parte da palavra e está na posição correta.</p>
+
+                <div class='example'>
+                    <span tabindex=0 role="text" aria-label="letra V" class='letter'>V</span>
+                    <span tabindex=0 role="text" aria-label="letra I" class='letter'>I</span>
+                    <span tabindex=0 role="text" aria-label="letra O em outro local" class='letter place'>O</span>
+                    <span tabindex=0 role="text" aria-label="letra L" class='letter'>L</span>
+                    <span tabindex=0 role="text" aria-label="letra A" class='letter'>A</span>
+                </div>
+
+                <p tabindex=0>A letra <span class='letter place'>O</span> faz parte da palavra mas em outra posição.</p>
+
+                <div class='example'>
+                    <span tabindex=0 role="text" aria-label="letra P" class='letter'>P</span>
+                    <span tabindex=0 role="text" aria-label="letra U" class='letter'>U</span>
+                    <span tabindex=0 role="text" aria-label="letra L" class='letter'>L</span>
+                    <span tabindex=0 role="text" aria-label="letra G errada" class='letter wrong'>G</span>
+                    <span tabindex=0 role="text" aria-label="letra A" class='letter'>A</span>
+                </div>
+
+                <p tabindex=0>A letra <span class='letter wrong'>G</span> não faz parte da palavra.</p>
+
+                <p tabindex=0>Os acentos são preenchidos automaticamente, e não são considerados nas dicas.</p>
+
+                <p tabindex=0>As palavras podem possuir letras repetidas.</p>
+
+                <br>
+
+                <p tabindex=0>Uma palavra nova aparece a cada dia.</p>
+        </div>
+        <div tabindex=0 id="config">
+            <p><label for="config_contrast">Contraste alto</label></p> <span><input id="config_contrast" class="toggle" type="checkbox"></span>
+
+            <p><label for="config_hardmode">Modo difícil</label><i>dicas são forçadas</i></p> <span><input id="config_hardmode" class="toggle" type="checkbox"></span>
+
+            <p>Comentários</p> <span>
+<a tabindex=0 href='mailto:fserb@fserb.com.br'>E-mail</a>
+<a tabindex=0 href='https://twitter.com/fserb'>Twitter</a>
+</span>
+
+            <p>Estatísticas</p> <span><a tabindex=0 href='https://term.ooo/stato'>Termostato</a></span>
+
+            <p><b>Termo</b> é baseado em <a href="https://www.powerlanguage.co.uk/wordle">Wordle</a>.</p>
+
+            <span id='config_version'>#bde2f36</span>
+        </div>
+        <div tabindex=0 id="stats">
+            <h2>progresso</h2>
+            <div id="statstable">
+                <b id="stats_games">1</b>
+                <p>jogos</p>
+                <b id="stats_pct">100%</b>
+                <p>de vitórias</p>
+                <b id="stats_streak">1</b>
+                <p>sequência<br>de vitórias</p>
+                <b id="stats_maxstreak">1</b>
+                <p>melhor<br>sequência</p>
+            </div>
+
+            <h2>distribuição de tentativas</h2>
+
+            <div id="histo">
+                <p>
+                    <a tabindex=0 href='https://term.ooo/stato'><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik02MyA0M0M2MC43OTA5IDQzIDU5IDQ0Ljc5MDkgNTkgNDdWNzMuNTQyM0M1NC4zNjAyIDc1LjAyMzEgNTEgNzkuMzY5MSA1MSA4NC41QzUxIDkwLjg1MTMgNTYuMTQ4NyA5NiA2Mi41IDk2QzY4Ljg1MTMgOTYgNzQgOTAuODUxMyA3NCA4NC41Qzc0IDc5Ljc0NTcgNzEuMTE0OSA3NS42NjUyIDY3IDczLjkxMzhWNDdDNjcgNDQuNzkwOSA2NS4yMDkxIDQzIDYzIDQzWiIgZmlsbD0iI0I3QUVCNCIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTQ2IDM3QzQ2IDI3LjYxMTEgNTMuNjExMSAyMCA2MyAyMEM3Mi4zODg5IDIwIDgwIDI3LjYxMTEgODAgMzdWNjkuODE1M0M4My43MzA4IDczLjk3NSA4NiA3OS40NzI1IDg2IDg1LjVDODYgOTguNDc4NyA3NS40Nzg3IDEwOSA2Mi41IDEwOUM0OS41MjEzIDEwOSAzOSA5OC40Nzg3IDM5IDg1LjVDMzkgNzguOTUxMyA0MS42Nzg2IDczLjAyODMgNDYgNjguNzY2OFYzN1pNNTQgMzdDNTQgMzIuMDI5NCA1OC4wMjk0IDI4IDYzIDI4QzY3Ljk3MDYgMjggNzIgMzIuMDI5NCA3MiAzN1Y3My4yNTE2Qzc1LjY1MDggNzYuMDg3MyA3OCA4MC41MTkzIDc4IDg1LjVDNzggOTQuMDYwNCA3MS4wNjA0IDEwMSA2Mi41IDEwMUM1My45Mzk2IDEwMSA0NyA5NC4wNjA0IDQ3IDg1LjVDNDcgODAuMDc4MiA0OS43ODM4IDc1LjMwNjUgNTQgNzIuNTM2NFYzN1oiIGZpbGw9IiNCN0FFQjQiLz4KPC9zdmc+Cg=="></a>
+                </p>
+                <b>1</b><span><div class="stats_histo" style="width:10%">0</div></span>
+                <b>2</b><span><div class="stats_histo" style="width:20%">0</div></span>
+                <b>3</b><span><div class="stats_histo" style="width:30%">0</div></span>
+                <b>4</b><span><div class="stats_histo" style="width:40%">0</div></span>
+                <b>5</b><span><div class="stats_histo" style="width:60%">0</div></span>
+                <b>6</b><span><div class="stats_histo" style="width:100%">0</div></span>
+                <b>💀</b><span><div class="stats_histo" style="width:0%">0</div></span>
+            </div>
+
+            <div id="statsnext">
+                <div>
+                    <p>próxima palavra em</p>
+                    <b id="stats_time">-</b></div>
+                <div><button tabindex=0 id="stats_share">compartilhe <img src="data:image/svg+xml;base64,PHN2ZyBmaWxsPSIjRkFGQUZGIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZD0iTSAxOCAyIEMgMTYuMzU0OTkgMiAxNSAzLjM1NDk5MDQgMTUgNSBDIDE1IDUuMTkwOTUyOSAxNS4wMjE3OTEgNS4zNzcxMjI0IDE1LjA1NjY0MSA1LjU1ODU5MzggTCA3LjkyMTg3NSA5LjcyMDcwMzEgQyA3LjM5ODUzOTkgOS4yNzc4NTM5IDYuNzMyMDc3MSA5IDYgOSBDIDQuMzU0OTkwNCA5IDMgMTAuMzU0OTkgMyAxMiBDIDMgMTMuNjQ1MDEgNC4zNTQ5OTA0IDE1IDYgMTUgQyA2LjczMjA3NzEgMTUgNy4zOTg1Mzk5IDE0LjcyMjE0NiA3LjkyMTg3NSAxNC4yNzkyOTcgTCAxNS4wNTY2NDEgMTguNDM5NDUzIEMgMTUuMDIxNTU1IDE4LjYyMTUxNCAxNSAxOC44MDgzODYgMTUgMTkgQyAxNSAyMC42NDUwMSAxNi4zNTQ5OSAyMiAxOCAyMiBDIDE5LjY0NTAxIDIyIDIxIDIwLjY0NTAxIDIxIDE5IEMgMjEgMTcuMzU0OTkgMTkuNjQ1MDEgMTYgMTggMTYgQyAxNy4yNjc0OCAxNiAxNi42MDE1OTMgMTYuMjc5MzI4IDE2LjA3ODEyNSAxNi43MjI2NTYgTCA4Ljk0MzM1OTQgMTIuNTU4NTk0IEMgOC45NzgyMDk1IDEyLjM3NzEyMiA5IDEyLjE5MDk1MyA5IDEyIEMgOSAxMS44MDkwNDcgOC45NzgyMDk1IDExLjYyMjg3OCA4Ljk0MzM1OTQgMTEuNDQxNDA2IEwgMTYuMDc4MTI1IDcuMjc5Mjk2OSBDIDE2LjYwMTQ2IDcuNzIyMTQ2MSAxNy4yNjc5MjMgOCAxOCA4IEMgMTkuNjQ1MDEgOCAyMSA2LjY0NTAwOTYgMjEgNSBDIDIxIDMuMzU0OTkwNCAxOS42NDUwMSAyIDE4IDIgeiBNIDE4IDQgQyAxOC41NjQxMjkgNCAxOSA0LjQzNTg3MDYgMTkgNSBDIDE5IDUuNTY0MTI5NCAxOC41NjQxMjkgNiAxOCA2IEMgMTcuNDM1ODcxIDYgMTcgNS41NjQxMjk0IDE3IDUgQyAxNyA0LjQzNTg3MDYgMTcuNDM1ODcxIDQgMTggNCB6IE0gNiAxMSBDIDYuNTY0MTI5NCAxMSA3IDExLjQzNTg3MSA3IDEyIEMgNyAxMi41NjQxMjkgNi41NjQxMjk0IDEzIDYgMTMgQyA1LjQzNTg3MDYgMTMgNSAxMi41NjQxMjkgNSAxMiBDIDUgMTEuNDM1ODcxIDUuNDM1ODcwNiAxMSA2IDExIHogTSAxOCAxOCBDIDE4LjU2NDEyOSAxOCAxOSAxOC40MzU4NzEgMTkgMTkgQyAxOSAxOS41NjQxMjkgMTguNTY0MTI5IDIwIDE4IDIwIEMgMTcuNDM1ODcxIDIwIDE3IDE5LjU2NDEyOSAxNyAxOSBDIDE3IDE4LjQzNTg3MSAxNy40MzU4NzEgMTggMTggMTggeiIvPjwvc3ZnPgo="></button></div>
+            </div>
+        </div>
+    </div>
+
+    <header>
+        <button tabindex=0 aria-label="instruções" id="how">?</button>
+        <h1 tabindex=0>Termo</h1>
+        <button tabindex=0 aria-label="estatísticas" id="prestats_button"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTI3IDYzLjVDMjcgNTkuMzU3OSAzMC4zNTc5IDU2IDM0LjUgNTZWNTZDMzguNjQyMSA1NiA0MiA1OS4zNTc5IDQyIDYzLjVWMTAySDI3VjYzLjVaIiBmaWxsPSIjQjdBRUI0Ii8+CjxwYXRoIGQ9Ik00NyAzMy41QzQ3IDI5LjM1NzkgNTAuMzU3OSAyNiA1NC41IDI2VjI2QzU4LjY0MjEgMjYgNjIgMjkuMzU3OSA2MiAzMy41VjEwMkg0N1YzMy41WiIgZmlsbD0iI0I3QUVCNCIvPgo8cGF0aCBkPSJNNjcgNTAuNUM2NyA0Ni4zNTc5IDcwLjM1NzkgNDMgNzQuNSA0M1Y0M0M3OC42NDIxIDQzIDgyIDQ2LjM1NzkgODIgNTAuNVYxMDJINjdWNTAuNVoiIGZpbGw9IiNCN0FFQjQiLz4KPHBhdGggZD0iTTg3IDczLjVDODcgNjkuMzU3OSA5MC4zNTc5IDY2IDk0LjUgNjZWNjZDOTguNjQyMSA2NiAxMDIgNjkuMzU3OSAxMDIgNzMuNVYxMDJIODdWNzMuNVoiIGZpbGw9IiNCN0FFQjQiLz4KPC9zdmc+Cg==" alt="estatísticas"></button>
+        <button tabindex=0 aria-label="configurações" id="config_button"><img src="data:image/svg+xml;base64,PHN2ZyB2aWV3Qm94PSIwIDAgMTI4IDEyOCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZmlsbC1ydWxlPSJldmVub2RkIiBjbGlwLXJ1bGU9ImV2ZW5vZGQiIGQ9Ik05Ny45ODAxIDU5LjAyNjNDOTguNjE1OCA1OS4yNDAxIDk5LjI4ODggNTkuNDY2NSAxMDAgNTkuNzE5M1Y2OS4yODA3Qzk5LjI5MjggNjkuNTMyMyA5OC42MjE5IDY5Ljc1NzggOTcuOTg2OSA2OS45NzEyQzk0LjI4MzkgNzEuMjE1NyA5MS44MDIgNzIuMDQ5OCA5MC40NzEyIDc1LjI1OTVDODkuMTM5NSA3OC40NzY0IDkwLjMwNzQgODAuODIzNCA5Mi4wNDgxIDg0LjMyMTRDOTIuMzQ1MiA4NC45MTg0IDkyLjY1OSA4NS41NDg5IDkyLjk3OTkgODYuMjIzTDg2LjIyMDEgOTIuOTg1OEM4NS41MzMzIDkyLjY1OTQgODQuODkyNiA5Mi4zNDEgODQuMjg3NCA5Mi4wNDAyQzgwLjc3OTEgOTAuMjk2NiA3OC40NjQzIDg5LjE0NjEgNzUuMjgwMiA5MC40NjgySDc1LjI3NzJDNzIuMDQ4IDkxLjgxMzUgNzEuMjE1OSA5NC4yODcyIDY5Ljk2NyA5OEM2OS43NTQ5IDk4LjYzMDcgNjkuNTMwNyA5OS4yOTcyIDY5LjI4MDcgMTAwSDU5LjcxOTNDNTkuNDY2NyA5OS4yODkzIDU5LjI0MDUgOTguNjE1OCA1OS4wMjY3IDk3Ljk3OTFDNTcuNzgwNyA5NC4yNjkxIDU2Ljk1MzIgOTEuODA1MyA1My43NDY1IDkwLjQ3NzFINTMuNzQzNUM1MC41MjY5IDg5LjE0MyA0OC4xNzU3IDkwLjMxMjMgNDQuNjc4OSA5Mi4wNTE1QzQ0LjA4MTcgOTIuMzQ4NSA0My40NTEgOTIuNjYyMiA0Mi43NzcgOTIuOTgyOEwzNi4wMTcyIDg2LjIyMDFDMzYuMzM4MyA4NS41NDUgMzYuNjUzNiA4NC45MTI1IDM2Ljk1MjggODQuMzEyNUMzOC42NzM3IDgwLjg2MDkgMzkuODU4NiA3OC40ODQ1IDM4LjUyMjkgNzUuMjUzNUMzNy4xOTE1IDcyLjA0NTIgMzQuNzEwNCA3MS4yMTIgMzEuMDA3NSA2OS45Njg2QzMwLjM3NDIgNjkuNzU1OSAyOS43MDUyIDY5LjUzMTMgMjkgNjkuMjgwN1Y1OS43MTkzQzI5LjcxMDMgNTkuNDY2NSAzMC4zODM4IDU5LjI0MDEgMzEuMDIwOSA1OS4wMjZDMzQuNzIxNSA1Ny43ODIgMzcuMTkyOCA1Ni45NTEzIDM4LjUyMjkgNTMuNzQzNUMzOS44NTU3IDUwLjUzMDEgMzguNjk0MyA0OC4xOTMzIDM2Ljk1NTYgNDQuNjk1QzM2LjY1NjYgNDQuMDkzNCAzNi4zNDA1IDQzLjQ1NzYgMzYuMDE3MiA0Mi43NzdMNDIuNzc3IDM2LjAxNzJDNDMuNDU2NiAzNi4zNDA0IDQ0LjA5MTMgMzYuNjU1OCA0NC42OTE0IDM2Ljk1NDFDNDguMjA1MiAzOC43MDA2IDUwLjUzMTkgMzkuODU3IDUzLjc0MzUgMzguNTIyOUg1My43NDY1QzU2Ljk1MTQgMzcuMTkzIDU3Ljc4MTkgMzQuNzIyMSA1OS4wMjU1IDMxLjAyMjJDNTkuMjM5OCAzMC4zODQ4IDU5LjQ2NjMgMjkuNzEwOCA1OS43MTkzIDI5SDY5LjI4MDdDNjkuNTMzIDI5LjcwOTkgNjkuNzU4OSAzMC4zODIzIDY5Ljk3MjUgMzEuMDE4QzcxLjIyMTQgMzQuNzM0OCA3Mi4wNDc3IDM3LjE5NDEgNzUuMjUzNSAzOC41MjI5SDc1LjI1NjVDNzguNDczMiAzOS44NTYgODAuODIzNyAzOC42ODcyIDg0LjMxNDQgMzYuOTUxNEM4NC45MTM2IDM2LjY1MzUgODUuNTQ2NSAzNi4zMzg4IDg2LjIyMyAzNi4wMTcyTDkyLjk4MjggNDIuNzc3QzkyLjY1OTUgNDMuNDU3OSA5Mi4zNDM3IDQ0LjA5MzggOTIuMDQ1MSA0NC42OTUyQzkwLjMwMzIgNDguMjAzNCA4OS4xNDYyIDUwLjUzMzcgOTAuNDc3MSA1My43NDM1VjUzLjc0NjVDOTEuODA0MSA1Ni45NDg5IDk0LjI0OTcgNTcuNzcxNSA5Ny45ODAxIDU5LjAyNjNaTTY0LjUgODBDNzMuMDYwNCA4MCA4MCA3My4wNjA0IDgwIDY0LjVDODAgNTUuOTM5NiA3My4wNjA0IDQ5IDY0LjUgNDlDNTUuOTM5NiA0OSA0OSA1NS45Mzk2IDQ5IDY0LjVDNDkgNzMuMDYwNCA1NS45Mzk2IDgwIDY0LjUgODBaIiBmaWxsPSIjQjdBRUI0Ii8+Cjwvc3ZnPgo=" alt="configurações"></button>
+    </header>
+
+    <div id="notify">
+        <div aria-live="assertive" tabindex=0 id="msg"></div>
+    </div>
+
+    <main>
+        <div id="boardarea">
+            <div aria-live="polite" id="board" role="group">
+                <div tabindex=0 role="group" class="row" aria-label="palavra 1">
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                </div>
+
+                <div tabindex=0 role="group" class="row" aria-label="palavra 2">
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                </div>
+
+                <div tabindex=0 role="group" class="row" aria-label="palavra 3">
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                </div>
+
+                <div tabindex=0 role="group" class="row" aria-label="palavra 4">
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                </div>
+
+                <div tabindex=0 role="group" class="row" aria-label="palavra 5">
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                </div>
+
+                <div tabindex=0 role="group" class="row" aria-label="palavra 6">
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                    <div class="letter"></div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <div id="kbd">
+        <button id="kbd_q">Q</button>
+        <button id="kbd_w">W</button>
+        <button id="kbd_e">E</button>
+        <button id="kbd_r">R</button>
+        <button id="kbd_t">T</button>
+        <button id="kbd_y">Y</button>
+        <button id="kbd_u">U</button>
+        <button id="kbd_i">I</button>
+        <button id="kbd_o">O</button>
+        <button id="kbd_p">P</button>
+        <button id="kbd_a">A</button>
+        <button id="kbd_s">S</button>
+        <button id="kbd_d">D</button>
+        <button id="kbd_f">F</button>
+        <button id="kbd_g">G</button>
+        <button id="kbd_h">H</button>
+        <button id="kbd_j">J</button>
+        <button id="kbd_k">K</button>
+        <button id="kbd_l">L</button>
+        <button id="kbd_backspace"><img src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjkwIiBoZWlnaHQ9IjI1NSIgdmlld0JveD0iMCAwIDI5MCAyNTUiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxwYXRoIGQ9Ik0xOS44OTE0IDEyNy4yNTFMMTAzLjA2OCA0MEgyNzVWMjE2SDEwMy4xM0wxOS44OTE0IDEyNy4yNTFaIiBzdHJva2U9IiNGQUZBRkYiIHN0cm9rZS13aWR0aD0iMjYiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPGxpbmUgeDE9IjEzIiB5MT0iLTEzIiB4Mj0iMTMwLjk0NyIgeTI9Ii0xMyIgdHJhbnNmb3JtPSJtYXRyaXgoMC43MDcxMDcgMC43MDcxMDcgLTAuNzY1MzY3IDAuNjQzNTk0IDExNSA4NikiIHN0cm9rZT0iI0ZBRkFGRiIgc3Ryb2tlLXdpZHRoPSIyNiIgc3Ryb2tlLWxpbmVjYXA9InJvdW5kIi8+CjxsaW5lIHgxPSIxMyIgeTE9Ii0xMyIgeDI9IjEzMC45NDciIHkyPSItMTMiIHRyYW5zZm9ybT0ibWF0cml4KDAuNzA3MTA3IC0wLjcwNzEwNyAwLjc2NTM2NyAwLjY0MzU5NCAxMzMuNDY1IDE4Ny43ODYpIiBzdHJva2U9IiNGQUZBRkYiIHN0cm9rZS13aWR0aD0iMjYiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K"></button>
+        <button id="kbd_z">Z</button>
+        <button id="kbd_x">X</button>
+        <button id="kbd_c">C</button>
+        <button id="kbd_v">V</button>
+        <button id="kbd_b">B</button>
+        <button id="kbd_n">N</button>
+        <button id="kbd_m">M</button>
+        <button id="kbd_enter">ENTER</button>
+    </div>
+
+    <script type="module" src="termo.bde2f36.js"></script>
+
+</body>
+
+</html>
